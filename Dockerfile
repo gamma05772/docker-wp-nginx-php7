@@ -12,10 +12,13 @@ RUN apt-get update
 RUN apt-get -y upgrade
 
 # PHP and nginx
-RUN apt-get install php7.0-fpm php7.0-mysql php7.0-gd php7.0-cli nginx -y
+RUN apt-get install mysql-server mysql-client php7.0-fpm php7.0-mysql php7.0-gd php7.0-cli nginx -y
 
 # Some essential tools
 RUN apt-get install curl git wget net-tools vim -y
+
+# mysql config
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
 # nginx config
 # Reduce keepalive timeout to 2 seconds
